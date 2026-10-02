@@ -27,7 +27,6 @@ For [Omarchy](https://omarchy.org) / Hyprland.
 | ☀️ **Solar curve** | The sun's elevation over your local day, from midnight to midnight |
 | ➖ **Horizon** | A thin line. Above it is daylight (bright curve), below it is night (dimmed curve) |
 | ⚪ **Sun dot** | Where the sun is right now: filled during the day, hollow once it has set |
-| 🌙 **Tooltip** | Hover for sunrise, sunset, current sun elevation and the moon phase with its illumination |
 | 📍 **Your location** | Uses the location from the Omarchy weather widget, and follows it when you change it |
 | 📦 **No dependencies** | Pure QML, no network, no API key. Everything is calculated locally |
 
@@ -67,9 +66,7 @@ To use a different fallback, change `latitude` / `longitude` at the top of `SunM
 
 - **Sun position:** the [USNO low-precision formula](https://aa.usno.navy.mil/faq/sun_approx), sampled 96 times over the day
   (every 15 minutes) and drawn with `QtQuick.Shapes`. The curve is split where it crosses the horizon.
-- **Sunrise / sunset:** the [sunrise equation](https://en.wikipedia.org/wiki/Sunrise_equation), with the usual −0.833° for refraction.
-  During polar day or night it shows `–`.
-- **Moon phase:** age in the synodic month (29.53 days) counted from a known new moon (2000-01-06 18:14 UTC).
+- **Day or night:** the dot turns hollow once the sun is below −0.833°, the usual value that accounts for refraction.
 - Refreshes every minute. Colours come from the bar, so it fits whatever Omarchy theme you use.
 
 ## Requirements

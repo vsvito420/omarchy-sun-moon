@@ -39,12 +39,6 @@ BarWidget {
   readonly property real currentAltitude: sunAltitude(now, latitude, longitude)
   readonly property bool isDay: currentAltitude > -0.833
 
-  readonly property var sun: sunTimes(now, latitude, longitude)
-  readonly property var moon: moonPhase(now)
-
-  // The bar only shows a tooltip while its target reports being hovered
-  readonly property bool tooltipHovered: hover.containsMouse
-
   implicitWidth: vertical ? barSize : graphWidth + 8
   implicitHeight: barSize
 
@@ -87,45 +81,6 @@ BarWidget {
     var ha = (gmst * 15 + lon - ra) * rad
     return Math.asin(Math.sin(lat * rad) * Math.sin(dec) + Math.cos(lat * rad) * Math.cos(dec) * Math.cos(ha)) / rad
   }
-
-  // Sunrise equation (https://en.wikipedia.org/wiki/Sunrise_equation)
-  function sunTimes(date, lat, lon) {
-    var rad = Math.PI / 180
-    var jdNoon = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12) / 86400000 + 2440587.5
-    var jStar = jdNoon - 2451545 + 0.0008 - lon / 360
-    var m = (357.5291 + 0.98560028 * jStar) % 360
-    var c = 1.9148 * Math.sin(m * rad) + 0.02 * Math.sin(2 * m * rad) + 0.0003 * Math.sin(3 * m * rad)
-    var lambda = (m + c + 180 + 102.9372) % 360
-    var transit = 2451545 + jStar + 0.0053 * Math.sin(m * rad) - 0.0069 * Math.sin(2 * lambda * rad)
-    var sinDecl = Math.sin(lambda * rad) * Math.sin(23.4397 * rad)
-    var cosDecl = Math.cos(Math.asin(sinDecl))
-    var cosOmega = (Math.sin(-0.833 * rad) - Math.sin(lat * rad) * sinDecl) / (Math.cos(lat * rad) * cosDecl)
-    if (Math.abs(cosOmega) > 1) return { rise: null, set: null }
-    var omega = Math.acos(cosOmega) / rad
-    function toDate(jd) { return new Date((jd - 2440587.5) * 86400000) }
-    return { rise: toDate(transit - omega / 360), set: toDate(transit + omega / 360) }
-  }
-
-  // Age in the synodic month, measured from the new moon of 2000-01-06 18:14 UTC
-  function moonPhase(date) {
-    var synodic = 29.530588853
-    var days = (date.getTime() - Date.UTC(2000, 0, 6, 18, 14)) / 86400000
-    var fraction = (((days % synodic) + synodic) % synodic) / synodic
-    var names = ["Neumond", "zunehmende Sichel", "erstes Viertel", "zunehmender Mond",
-                 "Vollmond", "abnehmender Mond", "letztes Viertel", "abnehmende Sichel"]
-    return {
-      name: names[Math.round(fraction * 8) % 8],
-      illumination: Math.round((1 - Math.cos(2 * Math.PI * fraction)) / 2 * 100)
-    }
-  }
-
-  function clock(d) {
-    return d ? Qt.formatTime(d, "HH:mm") : "–"
-  }
-
-  readonly property string tooltip: "Sonnenaufgang " + clock(sun.rise) + "  ·  Sonnenuntergang " + clock(sun.set)
-    + "\nSonnenhöhe " + Math.round(currentAltitude) + "°"
-    + "  ·  Mond: " + moon.name + ", " + moon.illumination + " %"
 
   FileView {
     path: Quickshell.env("HOME") + "/.local/state/omarchy/settings/weather.json"
@@ -203,13 +158,5 @@ BarWidget {
       border.color: root.fg
       border.width: root.isDay ? 0 : 1
     }
-  }
-
-  MouseArea {
-    id: hover
-    anchors.fill: parent
-    hoverEnabled: true
-    onEntered: if (root.bar) root.bar.showTooltip(root, root.tooltip)
-    onExited: if (root.bar) root.bar.hideTooltip(root)
   }
 }

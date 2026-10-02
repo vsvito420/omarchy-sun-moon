@@ -27,7 +27,6 @@ Für [Omarchy](https://omarchy.org) / Hyprland.
 | ☀️ **Sonnenkurve** | Die Sonnenhöhe über deinen Tag, von Mitternacht bis Mitternacht |
 | ➖ **Horizont** | Eine dünne Linie. Darüber ist Tag (helle Kurve), darunter Nacht (gedimmte Kurve) |
 | ⚪ **Sonnenpunkt** | Wo die Sonne gerade steht: tagsüber gefüllt, nach Sonnenuntergang hohl |
-| 🌙 **Tooltip** | Mit der Maus drüberfahren für Sonnenaufgang, Sonnenuntergang, aktuelle Sonnenhöhe und die Mondphase mit Beleuchtung |
 | 📍 **Dein Standort** | Nimmt den Standort aus dem Omarchy-Wetter-Widget und zieht mit, wenn du ihn änderst |
 | 📦 **Keine Abhängigkeiten** | Reines QML, kein Netzwerk, kein API-Key. Alles wird lokal berechnet |
 
@@ -67,9 +66,7 @@ Für einen anderen Ersatz-Standort änderst du `latitude` / `longitude` oben in 
 
 - **Sonnenstand:** die [USNO-Näherungsformel](https://aa.usno.navy.mil/faq/sun_approx), 96-mal über den Tag berechnet
   (alle 15 Minuten) und mit `QtQuick.Shapes` gezeichnet. Wo die Kurve den Horizont schneidet, wird sie geteilt.
-- **Sonnenauf- und -untergang:** die [Sonnenaufgangsgleichung](https://en.wikipedia.org/wiki/Sunrise_equation) mit den üblichen −0,833° für die Lichtbrechung.
-  Bei Polartag oder Polarnacht steht dort `–`.
-- **Mondphase:** Alter im synodischen Monat (29,53 Tage), gezählt ab einem bekannten Neumond (06.01.2000, 18:14 UTC).
+- **Tag oder Nacht:** Der Punkt wird hohl, sobald die Sonne unter −0,833° steht, dem üblichen Wert inklusive Lichtbrechung.
 - Aktualisiert sich jede Minute. Die Farben kommen von der Leiste und passen so zu jedem Omarchy-Theme.
 
 ## Voraussetzungen
