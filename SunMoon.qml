@@ -42,6 +42,9 @@ BarWidget {
   readonly property var sun: sunTimes(now, latitude, longitude)
   readonly property var moon: moonPhase(now)
 
+  // The bar only shows a tooltip while its target reports being hovered
+  readonly property bool tooltipHovered: hover.containsMouse
+
   implicitWidth: vertical ? barSize : graphWidth + 8
   implicitHeight: barSize
 
@@ -203,6 +206,7 @@ BarWidget {
   }
 
   MouseArea {
+    id: hover
     anchors.fill: parent
     hoverEnabled: true
     onEntered: if (root.bar) root.bar.showTooltip(root, root.tooltip)
