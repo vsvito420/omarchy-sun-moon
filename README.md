@@ -52,7 +52,7 @@ Update with `omarchy plugin update vsvito.sun-moon`, remove with `omarchy plugin
 The widget reads `latitude` and `longitude` from `~/.local/state/omarchy/settings/weather.json`, which is where the
 Omarchy **weather** widget stores its location. Set your place there and the solar curve follows straight away.
 
-Without a weather location it falls back to Friedrichshafen (Lake Constance, 47.66° N, 9.48° E).
+Without a weather location it falls back to Berlin (52.52° N, 13.40° E).
 To use a different fallback, change `latitude` / `longitude` at the top of `SunMoon.qml`.
 
 ## How it works

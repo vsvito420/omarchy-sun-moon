@@ -52,7 +52,7 @@ Aktualisieren mit `omarchy plugin update vsvito.sun-moon`, entfernen mit `omarch
 Das Widget liest `latitude` und `longitude` aus `~/.local/state/omarchy/settings/weather.json`. Dort speichert das
 Omarchy-**Wetter**-Widget seinen Standort. Stell deinen Ort dort ein, und die Sonnenkurve passt sich sofort an.
 
-Ohne Wetter-Standort nimmt es Friedrichshafen (Bodensee, 47,66° N, 9,48° O).
+Ohne Wetter-Standort nimmt es Berlin (52,52° N, 13,40° O).
 Für einen anderen Ersatz-Standort änderst du `latitude` / `longitude` oben in `SunMoon.qml`.
 
 ## So funktioniert's

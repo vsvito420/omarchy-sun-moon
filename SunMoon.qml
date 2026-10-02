@@ -11,10 +11,10 @@ BarWidget {
   id: root
   moduleName: "vsvito.sun-moon"
 
-  // Location comes from the weather widget's setting; Friedrichshafen (Bodensee)
+  // Location comes from the weather widget's setting; Berlin
   // is the fallback when none is configured.
-  property real latitude: 47.66
-  property real longitude: 9.48
+  property real latitude: 52.52
+  property real longitude: 13.40
   property date now: new Date()
 
   readonly property color fg: bar ? bar.foreground : "white"
